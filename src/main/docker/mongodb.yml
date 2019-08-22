@@ -1,0 +1,8 @@
+version: '2'
+services:
+  mc6007t1-mongodb:
+    image: mongo:4.0.10
+    ports:
+      - '27017:27017'
+    # volumes:
+    #     - ~/volumes/jhipster/mc6007t1/mongodb/:/data/db/
