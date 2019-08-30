@@ -1,6 +1,8 @@
 package com.mc6007.t1.security;
 
+import com.mc6007.t1.domain.Authority;
 import com.mc6007.t1.domain.User;
+import com.mc6007.t1.repository.AuthorityRepository;
 import com.mc6007.t1.repository.UserRepository;
 import org.hibernate.validator.internal.constraintvalidators.hv.EmailValidator;
 import org.slf4j.Logger;
@@ -24,9 +26,11 @@ public class DomainUserDetailsService implements UserDetailsService {
     private final Logger log = LoggerFactory.getLogger(DomainUserDetailsService.class);
 
     private final UserRepository userRepository;
+    private final AuthorityRepository authorityRepository;
 
-    public DomainUserDetailsService(UserRepository userRepository) {
+    public DomainUserDetailsService(UserRepository userRepository, AuthorityRepository authorityRepository) {
         this.userRepository = userRepository;
+        this.authorityRepository = authorityRepository;
     }
 
     @Override
@@ -34,7 +38,7 @@ public class DomainUserDetailsService implements UserDetailsService {
         log.debug("Authenticating {}", login);
 
         if (new EmailValidator().isValid(login, null)) {
-            return userRepository.findOneByEmailIgnoreCase(login)
+            return userRepository.findOneByEmail(login)
                 .map(user -> createSpringSecurityUser(login, user))
                 .orElseThrow(() -> new UsernameNotFoundException("User with email " + login + " was not found in the database"));
         }
@@ -51,7 +55,7 @@ public class DomainUserDetailsService implements UserDetailsService {
             throw new UserNotActivatedException("User " + lowercaseLogin + " was not activated");
         }
         List<GrantedAuthority> grantedAuthorities = user.getAuthorities().stream()
-            .map(authority -> new SimpleGrantedAuthority(authority.getName()))
+            .map(authority -> new SimpleGrantedAuthority( authorityRepository.findById(authority).orElse(new Authority()).getName()))
             .collect(Collectors.toList());
         return new org.springframework.security.core.userdetails.User(user.getLogin(),
             user.getPassword(),

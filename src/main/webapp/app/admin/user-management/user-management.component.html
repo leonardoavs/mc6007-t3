@@ -28,10 +28,10 @@
                 <td>{{user.login}}</td>
                 <td>{{user.email}}</td>
                 <td>
-                    <button class="btn btn-danger btn-sm" (click)="setActive(user, true)" *ngIf="!user.activated"
+                    <button class="btn btn-danger btn-sm" (click)="setActive(user, true)" *ngIf="!user.activated" [disabled]="user.login === 'anonymoususer'"
                             jhiTranslate="userManagement.deactivated">Deactivated</button>
-                    <button class="btn btn-success btn-sm" (click)="setActive(user, false)" *ngIf="user.activated"
-                            [disabled]="currentAccount.login === user.login" jhiTranslate="userManagement.activated">Activated</button>
+                    <button class="btn btn-success btn-sm" (click)="setActive(user, false)" *ngIf="user.activated"  [disabled]="user.login === 'anonymoususer' || currentAccount.login === user.login"
+                            jhiTranslate="userManagement.activated">Activated</button>
                 </td>
                 <td>{{user.langKey}}</td>
                 <td>
@@ -44,13 +44,13 @@
                 <td>{{user.lastModifiedDate | date:'dd/MM/yy HH:mm'}}</td>
                 <td class="text-right">
                     <div class="btn-group">
-                        <button type="submit"
+                        <button type="submit" [disabled]="user.login === 'anonymoususer'"
                                 [routerLink]="['./', user.login, 'view']"
                                 class="btn btn-info btn-sm">
                             <fa-icon [icon]="'eye'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
                         </button>
-                        <button type="submit"
+                        <button type="submit" [disabled]="user.login === 'anonymoususer'"
                                 [routerLink]="['./', user.login, 'edit']"
                                 queryParamsHandling="merge"
                                 class="btn btn-primary btn-sm">
@@ -58,7 +58,7 @@
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
                         </button>
                         <button type="button" (click)="deleteUser(user)"
-                                class="btn btn-danger btn-sm" [disabled]="currentAccount.login === user.login">
+                                class="btn btn-danger btn-sm" [disabled]="currentAccount.login === user.login || user.login === 'anonymoususer'">
                             <fa-icon [icon]="'times'"></fa-icon>
                             <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
                         </button>

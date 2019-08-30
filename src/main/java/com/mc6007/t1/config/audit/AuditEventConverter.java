@@ -38,7 +38,7 @@ public class AuditEventConverter {
         if (persistentAuditEvent == null) {
             return null;
         }
-        return new AuditEvent(persistentAuditEvent.getAuditEventDate(), persistentAuditEvent.getPrincipal(),
+        return new AuditEvent(persistentAuditEvent.getAuditEventDate().toInstant(), persistentAuditEvent.getPrincipal(),
             persistentAuditEvent.getAuditEventType(), convertDataToObjects(persistentAuditEvent.getData()));
     }
 

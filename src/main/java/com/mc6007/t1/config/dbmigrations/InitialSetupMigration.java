@@ -2,32 +2,44 @@ package com.mc6007.t1.config.dbmigrations;
 
 import com.mc6007.t1.domain.Authority;
 import com.mc6007.t1.domain.User;
+import com.mc6007.t1.repository.AuthorityRepository;
+import com.mc6007.t1.repository.UserRepository;
 import com.mc6007.t1.security.AuthoritiesConstants;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.stereotype.Component;
 
-import com.github.mongobee.changeset.ChangeLog;
-import com.github.mongobee.changeset.ChangeSet;
-import org.springframework.data.mongodb.core.MongoTemplate;
-
-import java.time.Instant;
+import java.util.Date;
 
 /**
  * Creates the initial database setup.
  */
-@ChangeLog(order = "001")
-public class InitialSetupMigration {
+@Component
+public class InitialSetupMigration implements ApplicationListener<ContextRefreshedEvent> {
 
-    @ChangeSet(order = "01", author = "initiator", id = "01-addAuthorities")
-    public void addAuthorities(MongoTemplate mongoTemplate) {
+    private UserRepository userRepository;
+    private AuthorityRepository authorityRepository;
+
+    public InitialSetupMigration(UserRepository userRepository, AuthorityRepository authorityRepository) {
+        this.userRepository = userRepository;
+        this.authorityRepository = authorityRepository;
+    }
+
+    @Override
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
+        addAuthorities();
+        addUsers();
+    }
+    public void addAuthorities() {
         Authority adminAuthority = new Authority();
         adminAuthority.setName(AuthoritiesConstants.ADMIN);
         Authority userAuthority = new Authority();
         userAuthority.setName(AuthoritiesConstants.USER);
-        mongoTemplate.save(adminAuthority);
-        mongoTemplate.save(userAuthority);
+        authorityRepository.save(adminAuthority);
+        authorityRepository.save(userAuthority);
     }
 
-    @ChangeSet(order = "02", author = "initiator", id = "02-addUsers")
-    public void addUsers(MongoTemplate mongoTemplate) {
+    public void addUsers() {
         Authority adminAuthority = new Authority();
         adminAuthority.setName(AuthoritiesConstants.ADMIN);
         Authority userAuthority = new Authority();
@@ -43,10 +55,10 @@ public class InitialSetupMigration {
         systemUser.setActivated(true);
         systemUser.setLangKey("es");
         systemUser.setCreatedBy(systemUser.getLogin());
-        systemUser.setCreatedDate(Instant.now());
-        systemUser.getAuthorities().add(adminAuthority);
-        systemUser.getAuthorities().add(userAuthority);
-        mongoTemplate.save(systemUser);
+        systemUser.setCreatedDate(new Date());
+        systemUser.getAuthorities().add(adminAuthority.getName());
+        systemUser.getAuthorities().add(userAuthority.getName());
+        userRepository.save(systemUser);
 
         User anonymousUser = new User();
         anonymousUser.setId("user-1");
@@ -58,8 +70,8 @@ public class InitialSetupMigration {
         anonymousUser.setActivated(true);
         anonymousUser.setLangKey("es");
         anonymousUser.setCreatedBy(systemUser.getLogin());
-        anonymousUser.setCreatedDate(Instant.now());
-        mongoTemplate.save(anonymousUser);
+        anonymousUser.setCreatedDate(new Date());
+        userRepository.save(anonymousUser);
 
         User adminUser = new User();
         adminUser.setId("user-2");
@@ -71,10 +83,10 @@ public class InitialSetupMigration {
         adminUser.setActivated(true);
         adminUser.setLangKey("es");
         adminUser.setCreatedBy(systemUser.getLogin());
-        adminUser.setCreatedDate(Instant.now());
-        adminUser.getAuthorities().add(adminAuthority);
-        adminUser.getAuthorities().add(userAuthority);
-        mongoTemplate.save(adminUser);
+        adminUser.setCreatedDate(new Date());
+        adminUser.getAuthorities().add(adminAuthority.getName());
+        adminUser.getAuthorities().add(userAuthority.getName());
+        userRepository.save(adminUser);
 
         User userUser = new User();
         userUser.setId("user-3");
@@ -86,8 +98,8 @@ public class InitialSetupMigration {
         userUser.setActivated(true);
         userUser.setLangKey("es");
         userUser.setCreatedBy(systemUser.getLogin());
-        userUser.setCreatedDate(Instant.now());
-        userUser.getAuthorities().add(userAuthority);
-        mongoTemplate.save(userUser);
+        userUser.setCreatedDate(new Date());
+        userUser.getAuthorities().add(userAuthority.getName());
+        userRepository.save(userUser);
     }
 }

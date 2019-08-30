@@ -3,7 +3,6 @@ package com.mc6007.t1.repository;
 import com.mc6007.t1.config.Constants;
 import com.mc6007.t1.config.audit.AuditEventConverter;
 import com.mc6007.t1.domain.PersistentAuditEvent;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.actuate.audit.AuditEvent;
@@ -12,8 +11,11 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Date;
 import java.time.Instant;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * An implementation of Spring Boot's {@link AuditEventRepository}.
@@ -44,7 +46,7 @@ public class CustomAuditEventRepository implements AuditEventRepository {
     @Override
     public List<AuditEvent> find(String principal, Instant after, String type) {
         Iterable<PersistentAuditEvent> persistentAuditEvents =
-            persistenceAuditEventRepository.findByPrincipalAndAuditEventDateAfterAndAuditEventType(principal, after, type);
+            persistenceAuditEventRepository.findByPrincipalAndAuditEventDateAfterAndAuditEventType(principal, Date.from(after), type);
         return auditEventConverter.convertToAuditEvent(persistentAuditEvents);
     }
 
@@ -57,7 +59,7 @@ public class CustomAuditEventRepository implements AuditEventRepository {
             PersistentAuditEvent persistentAuditEvent = new PersistentAuditEvent();
             persistentAuditEvent.setPrincipal(event.getPrincipal());
             persistentAuditEvent.setAuditEventType(event.getType());
-            persistentAuditEvent.setAuditEventDate(event.getTimestamp());
+            persistentAuditEvent.setAuditEventDate(Date.from(event.getTimestamp()));
             Map<String, String> eventData = auditEventConverter.convertDataToStrings(event.getData());
             persistentAuditEvent.setData(truncate(eventData));
             persistenceAuditEventRepository.save(persistentAuditEvent);

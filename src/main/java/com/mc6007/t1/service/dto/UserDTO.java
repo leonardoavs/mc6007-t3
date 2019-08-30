@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 
 import javax.validation.constraints.*;
 import java.time.Instant;
+import java.util.Date;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -45,11 +46,11 @@ public class UserDTO {
 
     private String createdBy;
 
-    private Instant createdDate;
+    private Date createdDate;
 
     private String lastModifiedBy;
 
-    private Instant lastModifiedDate;
+    private Date lastModifiedDate;
 
     private Set<String> authorities;
 
@@ -71,7 +72,6 @@ public class UserDTO {
         this.lastModifiedBy = user.getLastModifiedBy();
         this.lastModifiedDate = user.getLastModifiedDate();
         this.authorities = user.getAuthorities().stream()
-            .map(Authority::getName)
             .collect(Collectors.toSet());
     }
 
@@ -147,11 +147,11 @@ public class UserDTO {
         this.createdBy = createdBy;
     }
 
-    public Instant getCreatedDate() {
+    public Date getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Instant createdDate) {
+    public void setCreatedDate(Date createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -163,11 +163,11 @@ public class UserDTO {
         this.lastModifiedBy = lastModifiedBy;
     }
 
-    public Instant getLastModifiedDate() {
+    public Date getLastModifiedDate() {
         return lastModifiedDate;
     }
 
-    public void setLastModifiedDate(Instant lastModifiedDate) {
+    public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
 

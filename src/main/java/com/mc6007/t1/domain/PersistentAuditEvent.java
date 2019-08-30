@@ -1,11 +1,12 @@
 package com.mc6007.t1.domain;
 
+import com.sleepycat.persist.model.Entity;
+import com.sleepycat.persist.model.PrimaryKey;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
+
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.time.Instant;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,22 +15,20 @@ import java.util.Map;
  *
  * @see org.springframework.boot.actuate.audit.AuditEvent
  */
-@Document(collection = "jhi_persistent_audit_event")
+@Entity
 public class PersistentAuditEvent implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @Field("event_id")
+    @PrimaryKey
     private String id;
 
     @NotNull
     private String principal;
 
-    @Field("event_date")
-    private Instant auditEventDate;
+    private Date auditEventDate;
 
-    @Field("event_type")
     private String auditEventType;
 
     private Map<String, String> data = new HashMap<>();
@@ -50,11 +49,11 @@ public class PersistentAuditEvent implements Serializable {
         this.principal = principal;
     }
 
-    public Instant getAuditEventDate() {
+    public Date getAuditEventDate() {
         return auditEventDate;
     }
 
-    public void setAuditEventDate(Instant auditEventDate) {
+    public void setAuditEventDate(Date auditEventDate) {
         this.auditEventDate = auditEventDate;
     }
 

@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
+import java.util.Date;
 import java.util.Optional;
 
 /**
@@ -36,7 +37,7 @@ public class AuditEventService {
     }
 
     public Page<AuditEvent> findByDates(Instant fromDate, Instant toDate, Pageable pageable) {
-        return persistenceAuditEventRepository.findAllByAuditEventDateBetween(fromDate, toDate, pageable)
+        return persistenceAuditEventRepository.findAllByAuditEventDateBetween(Date.from(fromDate), Date.from(toDate), pageable)
             .map(auditEventConverter::convertToAuditEvent);
     }
 

@@ -24,6 +24,8 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * Service class for managing users.
@@ -65,7 +67,7 @@ public class UserService {
     public Optional<User> completePasswordReset(String newPassword, String key) {
         log.debug("Reset user password for reset key {}", key);
         return userRepository.findOneByResetKey(key)
-            .filter(user -> user.getResetDate().isAfter(Instant.now().minusSeconds(86400)))
+            .filter(user -> user.getResetDate().toInstant().isAfter(Instant.now().minusSeconds(86400)))
             .map(user -> {
                 user.setPassword(passwordEncoder.encode(newPassword));
                 user.setResetKey(null);
@@ -77,11 +79,11 @@ public class UserService {
     }
 
     public Optional<User> requestPasswordReset(String mail) {
-        return userRepository.findOneByEmailIgnoreCase(mail)
+        return userRepository.findOneByEmail(mail)
             .filter(User::getActivated)
             .map(user -> {
                 user.setResetKey(RandomUtil.generateResetKey());
-                user.setResetDate(Instant.now());
+                user.setResetDate(new Date());
                 userRepository.save(user);
                 this.clearUserCaches(user);
                 return user;
@@ -95,7 +97,7 @@ public class UserService {
                 throw new LoginAlreadyUsedException();
             }
         });
-        userRepository.findOneByEmailIgnoreCase(userDTO.getEmail()).ifPresent(existingUser -> {
+        userRepository.findOneByEmail(userDTO.getEmail()).ifPresent(existingUser -> {
             boolean removed = removeNonActivatedUser(existingUser);
             if (!removed) {
                 throw new EmailAlreadyUsedException();
@@ -117,7 +119,7 @@ public class UserService {
         newUser.setActivationKey(RandomUtil.generateActivationKey());
         Set<Authority> authorities = new HashSet<>();
         authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
-        newUser.setAuthorities(authorities);
+        newUser.setAuthorities(authorities.stream().map( x-> x.getName()).collect(Collectors.toSet()));
         userRepository.save(newUser);
         this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);
@@ -148,7 +150,7 @@ public class UserService {
         String encryptedPassword = passwordEncoder.encode(RandomUtil.generatePassword());
         user.setPassword(encryptedPassword);
         user.setResetKey(RandomUtil.generateResetKey());
-        user.setResetDate(Instant.now());
+        user.setResetDate(new Date());
         user.setActivated(true);
         if (userDTO.getAuthorities() != null) {
             Set<Authority> authorities = userDTO.getAuthorities().stream()
@@ -156,7 +158,7 @@ public class UserService {
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .collect(Collectors.toSet());
-            user.setAuthorities(authorities);
+            user.setAuthorities(authorities.stream().map( x-> x.getName()).collect(Collectors.toSet()));
         }
         userRepository.save(user);
         this.clearUserCaches(user);
@@ -208,12 +210,13 @@ public class UserService {
                 user.setImageUrl(userDTO.getImageUrl());
                 user.setActivated(userDTO.isActivated());
                 user.setLangKey(userDTO.getLangKey());
-                Set<Authority> managedAuthorities = user.getAuthorities();
+                Set<String> managedAuthorities = user.getAuthorities();
                 managedAuthorities.clear();
                 userDTO.getAuthorities().stream()
                     .map(authorityRepository::findById)
                     .filter(Optional::isPresent)
                     .map(Optional::get)
+                    .map(x->x.getName())
                     .forEach(managedAuthorities::add);
                 userRepository.save(user);
                 this.clearUserCaches(user);
@@ -248,7 +251,8 @@ public class UserService {
     }
 
     public Page<UserDTO> getAllManagedUsers(Pageable pageable) {
-        return userRepository.findAllByLoginNot(pageable, Constants.ANONYMOUS_USER).map(UserDTO::new);
+        return userRepository.findAll(pageable)
+            .map(UserDTO::new);
     }
 
     public Optional<User> getUserWithAuthoritiesByLogin(String login) {
@@ -284,7 +288,9 @@ public class UserService {
      * @return a list of all the authorities.
      */
     public List<String> getAuthorities() {
-        return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
+        Iterable<Authority> iterable = () -> authorityRepository.findAll().iterator();
+        Stream<Authority> targetStream = StreamSupport.stream(iterable.spliterator(), false);
+        return targetStream.map(Authority::getName).collect(Collectors.toList());
     }
 
 

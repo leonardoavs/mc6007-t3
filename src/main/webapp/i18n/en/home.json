@@ -1,19 +1,19 @@
 {
   "home": {
-    "title": "Welcome, Java Hipster!",
+    "title": "Welcome, MC6007-T1-->BDA!",
     "subtitle": "This is your homepage",
     "logged": {
       "message": "You are logged in as user \"{{username}}\"."
     },
-    "question": "If you have any question on JHipster:",
+    "question": "If you have any question on MC6007-T1-->BDA:",
     "link": {
-      "homepage": "JHipster homepage",
-      "stackoverflow": "JHipster on Stack Overflow",
-      "bugtracker": "JHipster bug tracker",
-      "chat": "JHipster public chat room",
-      "follow": "follow @java_hipster on Twitter"
+      "homepage": "Homepage",
+      "stackoverflow": "MC6007-T1-->BDA on Stack Overflow",
+      "bugtracker": "MC6007-T1-->BDA bug tracker",
+      "chat": "MC6007-T1-->BDA public chat room",
+      "follow": "follow @MC6007-T1-->BDA on Twitter"
     },
-    "like": "If you like JHipster, don't forget to give us a star on",
+    "like": "If you like MC6007-T1-->BDA, don't forget to give us a star on",
     "github": "GitHub"
   }
 }

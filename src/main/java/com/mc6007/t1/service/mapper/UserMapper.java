@@ -50,7 +50,7 @@ public class UserMapper {
             user.setActivated(userDTO.isActivated());
             user.setLangKey(userDTO.getLangKey());
             Set<Authority> authorities = this.authoritiesFromStrings(userDTO.getAuthorities());
-            user.setAuthorities(authorities);
+            user.setAuthorities(authorities.stream().map(x->x.getName()).collect(Collectors.toSet()));
             return user;
         }
     }
