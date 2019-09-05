@@ -42,7 +42,7 @@ To build the final jar and optimize the MC6007-T1-->BDA application for producti
 This will concatenate and minify the client CSS and JavaScript files. It will also modify `index.html` so it references these new files.
 To ensure everything worked, run:
 
-    java -jar target/mc-6007-t1-0.0.1-SNAPSHOT.jar --spring.config.name=application --spring.config.location=classpath:/config/application.yml,classpath:/config/application-{DB_PORT_NUMBER_FROM_1_TO_4}.yml
+    java -jar target/mc-6007-t1-0.0.1-SNAPSHOT.jar --spring.config.name=application --spring.config.location=classpath:/config/application.yml,classpath:/config/application-{DB_PORT_NUMBER_FROM_6001_TO_6004}.yml
 
 Then navigate to [http://localhost:8080](http://localhost:8080) in your browser.
 

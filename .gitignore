@@ -145,3 +145,5 @@ Desktop.ini
 # ESLint
 ######################
 .eslintcache
+/SwingMonitor/SwingMonitor/nbproject/private/
+/SwingMonitor/SwingMonitor/build/

@@ -23,6 +23,7 @@ import org.springframework.util.Assert;
 import org.springframework.util.ClassUtils;
 
 import java.io.File;
+import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -30,34 +31,34 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 public class BerkeleyKeyValueAdapter extends AbstractKeyValueAdapter {
     private static final Logger log = LoggerFactory.getLogger(BerkeleyKeyValueAdapter.class);
 
     private EntityStore entityStoreVar;
-    private BerkeleyDataBaseConfiguration berkeleyDataBaseConfiguration;
 
-    @Value("${database.port}")
-    private int databasePort;
-
-    @Value("${database.helper.port}")
-    private Integer databaseHelperPort;
+    private Timer timer = new Timer();
 
     /**
      * Creates a new {@link BerkeleyKeyValueAdapter} using the given {@link Map} as backing store.
      *
      */
     @SuppressWarnings("rawtypes")
-    public BerkeleyKeyValueAdapter() {
-
+    public BerkeleyKeyValueAdapter(@Value("${database.port}")int databasePort, @Value("${database.helper.port}")Integer databaseHelperPort) {
+        BerkeleyDataBaseConfiguration berkeleyDataBaseConfiguration = new BerkeleyDataBaseConfiguration(databasePort, databaseHelperPort);
+        entityStoreVar = getEntityStoreInitialConfiguration(berkeleyDataBaseConfiguration);
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                logInfo(berkeleyDataBaseConfiguration, getEntityStore() == null ? null : (ReplicatedEnvironment) getEntityStore().getEnvironment());
+            }
+        }, 0, 30 * 1000);
     }
 
-    public synchronized EntityStore getEntityStore() {
-        if(entityStoreVar == null) {
-            berkeleyDataBaseConfiguration = new BerkeleyDataBaseConfiguration(databasePort, databaseHelperPort);
-            entityStoreVar = getEntityStoreInitialConfiguration(berkeleyDataBaseConfiguration);
-        }
+    private EntityStore getEntityStore(){
         return entityStoreVar;
     }
 
@@ -94,13 +95,12 @@ public class BerkeleyKeyValueAdapter extends AbstractKeyValueAdapter {
         storeConfig.setAllowCreate(true);
         EntityStore entityStore = new EntityStore(env, "Mc6007T1Store", storeConfig);
 
-        logInfo(berkeleyDataBaseConfiguration, env);
-
         return entityStore;
     }
 
     private void logInfo(BerkeleyDataBaseConfiguration berkeleyDataBaseConfiguration, ReplicatedEnvironment env) {
         log.info("\n----------------------------------------------------------\n\t" +
+                "Time: \t{}\n\t" +
                 "Database Directory: \t{}\n\t" +
                 "Is Master : \t{}\n\t" +
                 "Is Replica: \t{}\n\t" +
@@ -109,10 +109,11 @@ public class BerkeleyKeyValueAdapter extends AbstractKeyValueAdapter {
                 "Database Host Name : \t{}\n\t" +
                 "Database Host Helper Name : \t{}\n\t" +
                 "Replication Group Name: \t{}\n----------------------------------------------------------",
+            ZonedDateTime.now().toString(),
             berkeleyDataBaseConfiguration.getDataBaseDirectory(),
-            env.getState().isMaster(),
-            env.getState().isReplica(),
-            env.getState().isActive(),
+            env == null ? "" : env.getState().isMaster(),
+            env == null ? "" : env.getState().isReplica(),
+            env == null ? "" : env.getState().isActive(),
             berkeleyDataBaseConfiguration.getNodeName(),
             berkeleyDataBaseConfiguration.getDataBaseHostName(),
             berkeleyDataBaseConfiguration.getDataBaseHostHelperName(),
@@ -280,8 +281,6 @@ public class BerkeleyKeyValueAdapter extends AbstractKeyValueAdapter {
 
             PrimaryIndex<String, Object> primaryIndex = this.getEntityStore().getPrimaryIndex(
                 String.class, clazz);
-
-            logInfo(berkeleyDataBaseConfiguration, (ReplicatedEnvironment) this.getEntityStore().getEnvironment());
 
             return primaryIndex;
         } catch(Exception e) {
