@@ -11,7 +11,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
       [
         {
           path: 'admin',
-          loadChildren: () => import('./admin/admin.module').then(m => m.Mc6007T1AdminModule)
+          loadChildren: () => import('./admin/admin.module').then(m => m.Mc6007T2AdminModule)
         },
         ...LAYOUT_ROUTES
       ],
@@ -20,4 +20,4 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
   ],
   exports: [RouterModule]
 })
-export class Mc6007T1AppRoutingModule {}
+export class Mc6007T2AppRoutingModule {}

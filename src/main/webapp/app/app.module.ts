@@ -11,12 +11,12 @@ import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
 import { ErrorHandlerInterceptor } from './blocks/interceptor/errorhandler.interceptor';
 import { NotificationInterceptor } from './blocks/interceptor/notification.interceptor';
-import { Mc6007T1SharedModule } from 'app/shared';
-import { Mc6007T1CoreModule } from 'app/core';
-import { Mc6007T1AppRoutingModule } from './app-routing.module';
-import { Mc6007T1HomeModule } from './home/home.module';
-import { Mc6007T1AccountModule } from './account/account.module';
-import { Mc6007T1EntityModule } from './entities/entity.module';
+import { Mc6007T2SharedModule } from 'app/shared';
+import { Mc6007T2CoreModule } from 'app/core';
+import { Mc6007T2AppRoutingModule } from './app-routing.module';
+import { Mc6007T2HomeModule } from './home/home.module';
+import { Mc6007T2AccountModule } from './account/account.module';
+import { Mc6007T2EntityModule } from './entities/entity.module';
 import * as moment from 'moment';
 // jhipster-needle-angular-add-module-import JHipster will add new module here
 import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent, ActiveMenuDirective, ErrorComponent } from './layouts';
@@ -32,13 +32,13 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
       i18nEnabled: true,
       defaultI18nLang: 'es'
     }),
-    Mc6007T1SharedModule.forRoot(),
-    Mc6007T1CoreModule,
-    Mc6007T1HomeModule,
-    Mc6007T1AccountModule,
+    Mc6007T2SharedModule.forRoot(),
+    Mc6007T2CoreModule,
+    Mc6007T2HomeModule,
+    Mc6007T2AccountModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
-    Mc6007T1EntityModule,
-    Mc6007T1AppRoutingModule
+    Mc6007T2EntityModule,
+    Mc6007T2AppRoutingModule
   ],
   declarations: [JhiMainComponent, NavbarComponent, ErrorComponent, PageRibbonComponent, ActiveMenuDirective, FooterComponent],
   providers: [
@@ -65,7 +65,7 @@ import { JhiMainComponent, NavbarComponent, FooterComponent, PageRibbonComponent
   ],
   bootstrap: [JhiMainComponent]
 })
-export class Mc6007T1AppModule {
+export class Mc6007T2AppModule {
   constructor(private dpConfig: NgbDatepickerConfig) {
     this.dpConfig.minDate = { year: moment().year() - 100, month: 1, day: 1 };
   }

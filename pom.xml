@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.mc6007.t1</groupId>
-    <artifactId>mc-6007-t1</artifactId>
+    <groupId>com.mc6007.t2</groupId>
+    <artifactId>mc-6007-t2</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>MC6007 T1 BDA</name>
+    <name>MC6007 T2 BDA</name>
 
     <repositories>
         <!-- jhipster-needle-maven-repository -->
@@ -94,11 +94,22 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-keyvalue</artifactId>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.jnosql.artemis</groupId>-->
+            <!--<artifactId>artemis-document</artifactId>-->
+            <!--<version>0.0.9</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.jnosql.diana</groupId>-->
+            <!--<artifactId>ravendb-driver</artifactId>-->
+            <!--<version>0.0.9</version>-->
+        <!--</dependency>-->
         <dependency>
-            <groupId>com.berkeley</groupId>
-            <artifactId>je</artifactId>
-            <version>7.5.11</version>
+            <groupId>net.ravendb</groupId>
+            <artifactId>ravendb</artifactId>
+            <version>4.1.6</version>
         </dependency>
+
         <dependency>
             <groupId>io.github.jhipster</groupId>
             <artifactId>jhipster-framework</artifactId>
@@ -471,7 +482,7 @@
                             <image>adoptopenjdk:11-jre-hotspot</image>
                         </from>
                         <to>
-                            <image>mc6007t1:latest</image>
+                            <image>mc6007t2:latest</image>
                         </to>
                         <container>
                             <entrypoint>

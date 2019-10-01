@@ -1,7 +1,7 @@
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
-import { Mc6007T1SharedModule } from 'app/shared';
+import { Mc6007T2SharedModule } from 'app/shared';
 
 import {
   PasswordStrengthBarComponent,
@@ -15,7 +15,7 @@ import {
 } from './';
 
 @NgModule({
-  imports: [Mc6007T1SharedModule, RouterModule.forChild(accountState)],
+  imports: [Mc6007T2SharedModule, RouterModule.forChild(accountState)],
   declarations: [
     ActivateComponent,
     RegisterComponent,
@@ -27,4 +27,4 @@ import {
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class Mc6007T1AccountModule {}
+export class Mc6007T2AccountModule {}

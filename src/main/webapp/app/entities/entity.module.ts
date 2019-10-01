@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
     RouterModule.forChild([
       {
         path: 'person',
-        loadChildren: () => import('./person/person.module').then(m => m.Mc6007T1PersonModule)
+        loadChildren: () => import('./person/person.module').then(m => m.Mc6007T2PersonModule)
       }
       /* jhipster-needle-add-entity-route - JHipster will add entity modules routes here */
     ])
@@ -16,4 +16,4 @@ import { RouterModule } from '@angular/router';
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class Mc6007T1EntityModule {}
+export class Mc6007T2EntityModule {}

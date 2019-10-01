@@ -21,7 +21,7 @@ import { NgbDateMomentAdapter } from 'app/shared/util/datepicker-adapter';
     DatePipe
   ]
 })
-export class Mc6007T1CoreModule {
+export class Mc6007T2CoreModule {
   constructor() {
     registerLocaleData(locale);
   }

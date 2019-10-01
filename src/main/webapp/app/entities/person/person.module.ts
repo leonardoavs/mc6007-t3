@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { JhiLanguageService } from 'ng-jhipster';
 import { JhiLanguageHelper } from 'app/core';
 
-import { Mc6007T1SharedModule } from 'app/shared';
+import { Mc6007T2SharedModule } from 'app/shared';
 import {
   PersonComponent,
   PersonDetailComponent,
@@ -17,13 +17,13 @@ import {
 const ENTITY_STATES = [...personRoute, ...personPopupRoute];
 
 @NgModule({
-  imports: [Mc6007T1SharedModule, RouterModule.forChild(ENTITY_STATES)],
+  imports: [Mc6007T2SharedModule, RouterModule.forChild(ENTITY_STATES)],
   declarations: [PersonComponent, PersonDetailComponent, PersonUpdateComponent, PersonDeleteDialogComponent, PersonDeletePopupComponent],
   entryComponents: [PersonComponent, PersonUpdateComponent, PersonDeleteDialogComponent, PersonDeletePopupComponent],
   providers: [{ provide: JhiLanguageService, useClass: JhiLanguageService }],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
-export class Mc6007T1PersonModule {
+export class Mc6007T2PersonModule {
   constructor(private languageService: JhiLanguageService, private languageHelper: JhiLanguageHelper) {
     this.languageHelper.language.subscribe((languageKey: string) => {
       if (languageKey) {

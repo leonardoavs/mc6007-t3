@@ -1,16 +1,16 @@
 version: '2'
 services:
-  mc6007t1-mongodb:
+  mc6007t2-mongodb:
     image: mongo:4.0.10
     ports:
       - '27017:27017'
-    command: mongos --configdb mc6007t1-mongodb-config
-  mc6007t1-mongodb-node:
+    command: mongos --configdb mc6007t2-mongodb-config
+  mc6007t2-mongodb-node:
     build:
       context: .
       dockerfile: mongodb/MongoDB.Dockerfile
     command: mongod --replSet rs1 --noprealloc --smallfiles
-  mc6007t1-mongodb-config:
+  mc6007t2-mongodb-config:
     image: mongo:4.0.10
-    container_name: mc6007t1-mongodb-config
+    container_name: mc6007t2-mongodb-config
     command: mongod --noprealloc --smallfiles --configsvr --dbpath /data/db

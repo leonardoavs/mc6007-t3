@@ -15,7 +15,7 @@ export class ErrorHandlerInterceptor implements HttpInterceptor {
         (err: any) => {
           if (err instanceof HttpErrorResponse) {
             if (!(err.status === 401 && (err.message === '' || (err.url && err.url.includes('api/account'))))) {
-              this.eventManager.broadcast({ name: 'mc6007T1App.httpError', content: err });
+              this.eventManager.broadcast({ name: 'mc6007T2App.httpError', content: err });
             }
           }
         }

@@ -1,6 +1,6 @@
 version: '2'
 services:
-  mc6007t1-sonar:
+  mc6007t2-sonar:
     image: sonarqube:7.9.1-community
     ports:
       - 9001:9000

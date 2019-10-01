@@ -40,7 +40,7 @@ export class JhiConfigurationService {
       }
     }
     // by default, use the default ApplicationContext Id
-    return res['contexts']['mc6007t1']['beans'];
+    return res['contexts']['mc6007t2']['beans'];
   }
 
   getEnv(): Observable<any> {

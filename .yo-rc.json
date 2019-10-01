@@ -1,14 +1,14 @@
 {
   "generator-jhipster": {
     "promptValues": {
-      "packageName": "com.mc6007.t1",
+      "packageName": "com.mc6007.t2",
       "nativeLanguage": "es"
     },
     "jhipsterVersion": "6.2.0",
     "applicationType": "monolith",
-    "baseName": "mc6007t1",
-    "packageName": "com.mc6007.t1",
-    "packageFolder": "com/mc6007/t1",
+    "baseName": "mc6007t2",
+    "packageName": "com.mc6007.t2",
+    "packageFolder": "com/mc6007/t2",
     "serverPort": "8080",
     "authenticationType": "jwt",
     "cacheProvider": "ehcache",

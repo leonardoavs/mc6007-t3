@@ -1,7 +1,7 @@
 {
-  "name": "mc-6007-t-1",
+  "name": "mc-6007-t-2",
   "version": "0.0.0",
-  "description": "Description for MC6007-T1-->BDA",
+  "description": "Description for MC6007-T2-->BDA",
   "private": true,
   "license": "UNLICENSED",
   "cacheDirectories": [
