@@ -33,11 +33,11 @@ public class RavenDatabaseValueAdapter extends AbstractKeyValueAdapter {
      *
      */
     @SuppressWarnings("rawtypes")
-    public RavenDatabaseValueAdapter(@Value("${database.port}")int databasePort) {
+    public RavenDatabaseValueAdapter(@Value("${database.url}")String url) {
 
-        RavenDatabaseConfiguration berkeleyDataBaseConfiguration = new RavenDatabaseConfiguration(databasePort);
+        RavenDatabaseConfiguration berkeleyDataBaseConfiguration = new RavenDatabaseConfiguration(url);
 
-        store = new DocumentStore(new String[]{berkeleyDataBaseConfiguration.getDataBaseHostName()}, "mc6007db");
+        store = new DocumentStore(new String[]{berkeleyDataBaseConfiguration.getDatabaseUrl()}, "mc6007db");
 
         DocumentConventions conventions = store.getConventions();
 

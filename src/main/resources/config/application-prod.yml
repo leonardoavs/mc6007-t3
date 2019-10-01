@@ -66,7 +66,7 @@ server:
     min-response-size: 1024
 
 database:
-  port: 8080
+  url: http://NodeA:8080
 
 # ===================================================================
 # JHipster specific properties

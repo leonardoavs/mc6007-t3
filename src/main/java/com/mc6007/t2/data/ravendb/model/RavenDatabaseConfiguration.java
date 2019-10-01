@@ -2,14 +2,14 @@ package com.mc6007.t2.data.ravendb.model;
 
 public class RavenDatabaseConfiguration {
 
-    private final int databasePort;
+    private final String url;
 
-    public RavenDatabaseConfiguration(int databasePort) {
-        this.databasePort = databasePort;
+    public RavenDatabaseConfiguration(String url) {
+        this.url = url;
     }
 
-    public String getDataBaseHostName(){
-        return "http://localhost:" + databasePort;
+    public String getDatabaseUrl(){
+        return url;
     }
 
 }
