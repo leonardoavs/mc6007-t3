@@ -42,9 +42,9 @@ To build the final jar and optimize the MC6007-T2-->BDA application for producti
 This will concatenate and minify the client CSS and JavaScript files. It will also modify `index.html` so it references these new files.
 To ensure everything worked, run:
 
-    java -jar target/mc-6007-t2-0.0.1-SNAPSHOT.jar --spring.config.name=application --spring.config.location=classpath:/config/application.yml,classpath:/config/application-{DB_PORT_NUMBER_FROM_6001_TO_6004}.yml
+    java -jar target/mc-6007-t2-0.0.1-SNAPSHOT.jar --spring.config.name=application --spring.config.location=classpath:/config/application.yml,classpath:/config/application-{prod/dev}.yml
 
-Then navigate to [http://localhost:8080](http://localhost:8080) in your browser.
+Then navigate to [http://localhost:8090](http://localhost:8090) in your browser.
 
 ### Packaging as war
 
@@ -54,8 +54,7 @@ To package your application as a war in order to deploy it to an application ser
     Windows: mvnw -Pprod,war clean package -DskipTests=true
 
 4. Notes:
-   The databases will be created in the following path: /Berkeley/databases/, this path depends of the operating system for example in windows could start with a driver letter as C: or D: and in unix with only "/".
-   The database names are: database6001, database6002, database6003, database6004
+   The database in this case is a raven db server, and you will be able to see the server on the web address : http://localhost:8080
 
 [node.js]: https://nodejs.org/
 [webpack]: https://webpack.github.io/
