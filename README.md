@@ -1,4 +1,4 @@
-# MC6007-T2-->BDA
+# MC6007-T3-->BDA
 
 ## Development
 
@@ -34,7 +34,7 @@ The `npm run` command will list all of the scripts available to run for this pro
 
 ### Packaging as jar
 
-To build the final jar and optimize the MC6007-T2-->BDA application for production, run:
+To build the final jar and optimize the MC6007-T3-->BDA application for production, run:
 
     Unix: ./mvnw -Pprod clean package -DskipTests=true
     Windows: mvnw -Pprod clean package -DskipTests=true
@@ -42,7 +42,7 @@ To build the final jar and optimize the MC6007-T2-->BDA application for producti
 This will concatenate and minify the client CSS and JavaScript files. It will also modify `index.html` so it references these new files.
 To ensure everything worked, run:
 
-    java -jar target/mc-6007-t2-0.0.1-SNAPSHOT.jar --spring.config.name=application --spring.config.location=classpath:/config/application.yml,classpath:/config/application-{prod/dev}.yml
+    java -jar target/mc-6007-t3-0.0.1-SNAPSHOT.jar --spring.config.name=application --spring.config.location=classpath:/config/application.yml,classpath:/config/application-prod.yml
 
 Then navigate to [http://localhost:8090](http://localhost:8090) in your browser.
 

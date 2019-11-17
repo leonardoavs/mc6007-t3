@@ -3,11 +3,11 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.mc6007.t2</groupId>
-    <artifactId>mc-6007-t2</artifactId>
+    <groupId>com.mc6007.t3</groupId>
+    <artifactId>mc-6007-t3</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>MC6007 T2 BDA</name>
+    <name>MC6007 T3 BDA</name>
 
     <repositories>
         <!-- jhipster-needle-maven-repository -->
@@ -487,7 +487,7 @@
                             <image>adoptopenjdk:11-jre-hotspot</image>
                         </from>
                         <to>
-                            <image>mc6007t2:latest</image>
+                            <image>mc6007t3:latest</image>
                         </to>
                         <container>
                             <entrypoint>
