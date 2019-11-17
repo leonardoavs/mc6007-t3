@@ -1,5 +1,9 @@
 package com.mc6007.t2.domain;
 
+import com.franz.agraph.jena.AGModel;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.vocabulary.RDF;
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotNull;
@@ -13,7 +17,7 @@ import java.util.Map;
  *
  * @see org.springframework.boot.actuate.audit.AuditEvent
  */
-public class PersistentAuditEvent implements Serializable, Identifiable {
+public class PersistentAuditEvent implements Serializable, Identifiable, DatabaseResource {
 
     private static final long serialVersionUID = 1L;
 
@@ -92,5 +96,48 @@ public class PersistentAuditEvent implements Serializable, Identifiable {
             ", auditEventDate=" + auditEventDate +
             ", auditEventType='" + auditEventType + '\'' +
             '}';
+    }
+
+    public void createResource(AGModel model, Resource resource, String baseUrl) {
+        Resource base = model.getResource(baseUrl + getClass().getName());
+        base = base == null ? model.createResource(baseUrl + getClass().getName()) : base;
+
+        createProperty(model, baseUrl, resource, "id", String.valueOf(id));
+        createProperty(model, baseUrl, resource, "principal", String.valueOf(principal));
+        createProperty(model, baseUrl, resource, "auditEventDate", String.valueOf(auditEventDate));
+        createProperty(model, baseUrl, resource, "auditEventType", auditEventType);
+
+        int i = 0;
+        for(Map.Entry<String, String> entry : data.entrySet()) {
+            createProperty(model, baseUrl, resource, "dataKey" + i, entry.getKey());
+            createProperty(model, baseUrl, resource, "dataValue" + i, entry.getValue());
+            i++;
+        }
+        if(!model.contains(resource, RDF.type, base)) {
+            model.add(resource, RDF.type, base);
+        }
+    }
+
+    @Override
+    public PersistentAuditEvent loadEntity(AGModel model, String baseUrl, Statement statement) {
+        Resource resource = statement.getSubject();
+        this.id = getStringValue(model, baseUrl, resource, "id");
+        this.principal = getStringValue(model, baseUrl, resource, "principal");
+        this.auditEventDate =  null;//getStringValue(model, baseUrl, resource, "id")).getString();
+        this.auditEventType = getStringValue(model, baseUrl, resource, "auditEventType");
+        int i = 0;
+        while(true) {
+            String key = getStringValue(model, baseUrl, resource, "dataKey" + i);
+            String data = getStringValue(model, baseUrl, resource, "dataValue" + i);
+            if(
+                (key == null || key.trim().length() == 0)
+                && (data == null || data.trim().length() == 0)
+            ) {
+                break;
+            }
+            this.data.put(key, data);
+            i++;
+        }
+        return this;
     }
 }

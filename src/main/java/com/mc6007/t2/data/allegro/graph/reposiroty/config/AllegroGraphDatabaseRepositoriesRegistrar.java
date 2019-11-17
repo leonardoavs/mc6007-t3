@@ -1,11 +1,11 @@
-package com.mc6007.t2.data.ravendb.reposiroty.config;
+package com.mc6007.t2.data.allegro.graph.reposiroty.config;
 
 import org.springframework.data.repository.config.RepositoryBeanDefinitionRegistrarSupport;
 import org.springframework.data.repository.config.RepositoryConfigurationExtension;
 
 import java.lang.annotation.Annotation;
 
-public class RavenDatabaseRepositoriesRegistrar extends RepositoryBeanDefinitionRegistrarSupport {
+public class AllegroGraphDatabaseRepositoriesRegistrar extends RepositoryBeanDefinitionRegistrarSupport {
 
     /*
      * (non-Javadoc)
@@ -13,7 +13,7 @@ public class RavenDatabaseRepositoriesRegistrar extends RepositoryBeanDefinition
      */
     @Override
     protected Class<? extends Annotation> getAnnotation() {
-        return EnableRavenDatabaseRepositories.class;
+        return EnableAllegroGraphDatabaseRepositories.class;
     }
 
     /*
@@ -22,6 +22,6 @@ public class RavenDatabaseRepositoriesRegistrar extends RepositoryBeanDefinition
      */
     @Override
     protected RepositoryConfigurationExtension getExtension() {
-        return new RavenDatabaseRepositoryConfigurationExtension();
+        return new AllegroGraphDatabaseRepositoryConfigurationExtension();
     }
 }

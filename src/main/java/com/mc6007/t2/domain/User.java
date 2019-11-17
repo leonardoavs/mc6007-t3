@@ -1,8 +1,13 @@
 package com.mc6007.t2.domain;
 
 //import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import com.franz.agraph.jena.AGModel;
 import com.mc6007.t2.config.Constants;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.vocabulary.RDF;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -22,7 +27,7 @@ import java.util.Set;
 /**
  * A user.
  */
-public class User implements Serializable, Identifiable {
+public class User implements Serializable, Identifiable, DatabaseResource {
 
     private static final long serialVersionUID = 1L;
 
@@ -253,4 +258,74 @@ public class User implements Serializable, Identifiable {
     public void setLastModifiedDate(Date lastModifiedDate) {
         this.lastModifiedDate = lastModifiedDate;
     }
+
+    public void createResource(AGModel model, Resource resource, String baseUrl) {
+        Resource base = model.getResource(baseUrl + getClass().getName());
+        base = base == null ? model.createResource(baseUrl + getClass().getName()) : base;
+
+        createProperty(model, baseUrl, resource, "id", id);
+        createProperty(model, baseUrl, resource, "password", password);
+        createProperty(model, baseUrl, resource, "login", login);
+        createProperty(model, baseUrl, resource, "firstName", firstName);
+        createProperty(model, baseUrl, resource, "lastName", lastName);
+        createProperty(model, baseUrl, resource, "email", email);
+        createProperty(model, baseUrl, resource, "imageUrl", imageUrl);
+        createProperty(model, baseUrl, resource, "activated", String.valueOf(activated));
+        createProperty(model, baseUrl, resource, "langKey", langKey);
+        createProperty(model, baseUrl, resource, "activationKey", activationKey);
+        createProperty(model, baseUrl, resource, "resetKey", resetKey);
+        createProperty(model, baseUrl, resource, "resetDate", String.valueOf(resetDate));
+        createProperty(model, baseUrl, resource, "createdBy", String.valueOf(createdBy));
+        createProperty(model, baseUrl, resource, "createdDate", String.valueOf(createdDate));
+        createProperty(model, baseUrl, resource, "lastModifiedBy", String.valueOf(lastModifiedBy));
+        createProperty(model, baseUrl, resource, "lastModifiedDate", String.valueOf(lastModifiedDate));
+        int i = 0;
+        for(String entry : authorities) {
+            createProperty(model, baseUrl, resource, "authority" + i, entry);
+            i++;
+        }
+
+        if(!model.contains(resource, RDF.type, base)) {
+            model.add(resource, RDF.type, base);
+        }
+    }
+
+    @Override
+    public User loadEntity(AGModel model, String baseUrl, Statement statement) {
+        Resource resource = statement.getSubject();
+        this.id = getStringValue(model, baseUrl, resource, "id");
+        this.password = getStringValue(model, baseUrl, resource, "password");
+        this.login = getStringValue(model, baseUrl, resource, "login");
+        this.firstName = getStringValue(model, baseUrl, resource, "firstName");
+        this.lastName = getStringValue(model, baseUrl, resource, "lastName");
+        this.email = getStringValue(model, baseUrl, resource, "email");
+        this.imageUrl = getStringValue(model, baseUrl, resource, "imageUrl");
+        //this.activated = resource.getProperty(createProperty(model, baseUrl, "activated")).getBoolean();
+        this.activated = Boolean.valueOf(getStringValue(model, baseUrl, resource, "activated"));
+
+        //this.activated = active != null ? active.equalsIgnoreCase("true") : false;
+
+        this.langKey = getStringValue(model, baseUrl, resource, "langKey");
+        this.activationKey = getStringValue(model, baseUrl, resource, "activationKey");
+        this.resetKey = getStringValue(model, baseUrl, resource, "resetKey");
+        this.resetDate = null;//resource.getProperty(createProperty(model, baseUrl, "resetDate")).getString();
+        this.createdBy = getStringValue(model, baseUrl, resource, "createdBy");
+        this.createdDate = null;//resource.getProperty(createProperty(model, baseUrl, "createdDate")).getString();
+        this.lastModifiedBy = getStringValue(model, baseUrl, resource, "lastModifiedBy");
+        this.lastModifiedDate = null;//resource.getProperty(createProperty(model, baseUrl, "lastModifiedDate")).getString();
+
+        int i = 0;
+        while(true) {
+            String key = getStringValue(model, baseUrl, resource,"authority" + i);
+            if(key == null || key.trim().length() == 0) {
+                break;
+            }
+            this.authorities.add(key);
+            i++;
+        }
+
+        return this;
+    }
+
+
 }

@@ -1,4 +1,4 @@
-package com.mc6007.t2.data.ravendb.reposiroty.config;
+package com.mc6007.t2.data.allegro.graph.reposiroty.config;
 
 import org.springframework.context.annotation.ComponentScan.Filter;
 import org.springframework.context.annotation.Import;
@@ -22,9 +22,9 @@ import static org.springframework.data.repository.query.QueryLookupStrategy.Key;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 @Inherited
-@Import(RavenDatabaseRepositoriesRegistrar.class)
+@Import(AllegroGraphDatabaseRepositoriesRegistrar.class)
 @QueryCreatorType(value = SpelQueryCreator.class, repositoryQueryType = CachingKeyValuePartTreeQuery.class)
-public @interface EnableRavenDatabaseRepositories {
+public @interface EnableAllegroGraphDatabaseRepositories {
 
     /**
      * Alias for the {@link #basePackages()} attribute. Allows for more concise annotation declarations e.g.:
@@ -100,7 +100,7 @@ public @interface EnableRavenDatabaseRepositories {
      *
      * @return
      */
-    String keyValueTemplateRef() default "ravenDatabaseDocumentTemplate";
+    String keyValueTemplateRef() default "allegroGraphDatabaseDocumentTemplate";
 
     /**
      * Configures whether nested repository-interfaces (e.g. defined as inner classes) should be discovered by the

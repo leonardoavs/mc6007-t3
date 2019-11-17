@@ -1,5 +1,9 @@
 package com.mc6007.t2.domain;
 
+import com.franz.agraph.jena.AGModel;
+import org.apache.jena.rdf.model.Resource;
+import org.apache.jena.rdf.model.Statement;
+import org.apache.jena.vocabulary.RDF;
 import org.springframework.data.annotation.Id;
 
 import javax.validation.constraints.NotNull;
@@ -9,7 +13,7 @@ import java.io.Serializable;
 /**
  * A Person.
  */
-public class Person implements Serializable, Identifiable {
+public class Person implements Serializable, Identifiable, DatabaseResource {
 
     private static final long serialVersionUID = 1L;
 
@@ -66,4 +70,25 @@ public class Person implements Serializable, Identifiable {
             ", name='" + getName() + "'" +
             "}";
     }
+
+    public void createResource(AGModel model, Resource resource, String baseUrl) {
+        Resource base = model.getResource(baseUrl + getClass().getName());
+        base = base == null ? model.createResource(baseUrl + getClass().getName()) : base;
+
+        createProperty(model, baseUrl, resource, "id", id);
+        createProperty(model, baseUrl, resource, "name", name);
+
+        if(!model.contains(resource, RDF.type, base)) {
+            model.add(resource, RDF.type, base);
+        }
+    }
+
+    @Override
+    public Person loadEntity(AGModel model, String baseUrl, Statement statement) {
+        Resource resource = statement.getSubject();
+        this.id = getStringValue(model, baseUrl, resource, "id");
+        this.name = getStringValue(model, baseUrl, resource, "name");
+        return this;
+    }
+
 }

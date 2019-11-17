@@ -1,12 +1,13 @@
 
-888b     d888  .d8888b.   .d8888b.   .d8888b.   .d8888b.  8888888888     88888888888 .d8888b.              Y88b    8888888b.  888888b.          d8888
-8888b   d8888 d88P  Y88b d88P  Y88b d88P  Y88b d88P  Y88b       d88P         888    d88P  Y88b              Y88b   888  "Y88b 888  "88b        d88888
-88888b.d88888 888    888 888        888    888 888    888      d88P          888           888               Y88b  888    888 888  .88P       d88P888
-888Y88888P888 888        888d888b.  888    888 888    888     d88P           888         .d88P                Y88b 888    888 8888888K.      d88P 888
-888 Y888P 888 888        888P "Y88b 888    888 888    888  88888888          888     .od888P"                 d88P 888    888 888  "Y88b    d88P  888
-888  Y8P  888 888    888 888    888 888    888 888    888   d88P    888888   888    d88P"      888888 888888 d88P  888    888 888    888   d88P   888
-888   "   888 Y88b  d88P Y88b  d88P Y88b  d88P Y88b  d88P  d88P              888    888"                    d88P   888  .d88P 888   d88P  d8888888888
-888       888  "Y8888P"   "Y8888P"   "Y8888P"   "Y8888P"  d88P               888    888888888              d88P    8888888P"  8888888P"  d88P     888
+ooo        ooooo   .oooooo.       .ooo     .oooo.     .oooo.    ooooooooo         ooooooooo.     .oooo.                  oooooooooo.   oooooooooo.        .o.
+`88.       .888'  d8P'  `Y8b    .88'      d8P'`Y8b   d8P'`Y8b  d"""""""8'         `888   `Y88. .dP""Y88b          Yb     `888'   `Y8b  `888'   `Y8b      .888.
+ 888b     d'888  888           d88'      888    888 888    888       .8'           888   .d88'       ]8P'          `Yb    888      888  888     888     .8"888.
+ 8 Y88. .P  888  888          d888P"Ybo. 888    888 888    888      .8'            888ooo88P'      <88b.             `Yb  888      888  888oooo888'    .8' `888.
+ 8  `888'   888  888          Y88[   ]88 888    888 888    888     .8'    8888888  888              `88b. 8888888    .dP  888      888  888    `88b   .88ooo8888.
+ 8    Y     888  `88b    ooo  `Y88   88P `88b  d88' `88b  d88'    .8'              888         o.   .88P           .dP    888     d88'  888    .88P  .8'     `888.
+o8o        o888o  `Y8bood8P'   `88bod8'   `Y8bd8P'   `Y8bd8P'    .8'              o888o        `8bd88P'           dP     o888bood8P'   o888bood8P'  o88o     o8888o
+
+
 
 ${AnsiColor.BRIGHT_BLUE}:: Bases de Datos Avanzadas 🤓  :: Running Spring Boot ${spring-boot.version} ::
 :: http://localhost:* ::${AnsiColor.DEFAULT}

@@ -1,6 +1,6 @@
-package com.mc6007.t2.data.ravendb.reposiroty.config;
+package com.mc6007.t2.data.allegro.graph.reposiroty.config;
 
-import com.mc6007.t2.data.ravendb.RavenDatabaseValueAdapter;
+import com.mc6007.t2.data.allegro.graph.AllegroGraphDatabaseValueAdapter;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.support.AbstractBeanDefinition;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
@@ -9,7 +9,7 @@ import org.springframework.data.keyvalue.core.KeyValueTemplate;
 import org.springframework.data.keyvalue.repository.config.KeyValueRepositoryConfigurationExtension;
 import org.springframework.data.repository.config.RepositoryConfigurationSource;
 
-public class RavenDatabaseRepositoryConfigurationExtension extends KeyValueRepositoryConfigurationExtension {
+public class AllegroGraphDatabaseRepositoryConfigurationExtension extends KeyValueRepositoryConfigurationExtension {
 
     /*
      * (non-Javadoc)
@@ -17,7 +17,7 @@ public class RavenDatabaseRepositoryConfigurationExtension extends KeyValueRepos
      */
     @Override
     public String getModuleName() {
-        return "RavenDatabase";
+        return "AllegroGraphDatabase";
     }
 
     /*
@@ -26,7 +26,7 @@ public class RavenDatabaseRepositoryConfigurationExtension extends KeyValueRepos
      */
     @Override
     protected String getModulePrefix() {
-        return "raven";
+        return "allegroGraph";
     }
 
     /*
@@ -35,7 +35,7 @@ public class RavenDatabaseRepositoryConfigurationExtension extends KeyValueRepos
      */
     @Override
     protected String getDefaultKeyValueTemplateRef() {
-        return "ravenDatabaseDocumentTemplate";
+        return "allegroGraphDatabaseDocumentTemplate";
     }
 
     /*
@@ -46,7 +46,7 @@ public class RavenDatabaseRepositoryConfigurationExtension extends KeyValueRepos
     protected AbstractBeanDefinition getDefaultKeyValueTemplateBeanDefinition(
         RepositoryConfigurationSource configurationSource) {
 
-        BeanDefinitionBuilder adapterBuilder = BeanDefinitionBuilder.rootBeanDefinition(RavenDatabaseValueAdapter.class);
+        BeanDefinitionBuilder adapterBuilder = BeanDefinitionBuilder.rootBeanDefinition(AllegroGraphDatabaseValueAdapter.class);
         //adapterBuilder.addConstructorArgValue(getDbNameToUse(configurationSource));
 
         BeanDefinitionBuilder builder = BeanDefinitionBuilder.rootBeanDefinition(KeyValueTemplate.class);
@@ -60,6 +60,6 @@ public class RavenDatabaseRepositoryConfigurationExtension extends KeyValueRepos
     //@SuppressWarnings({ "unchecked", "rawtypes" })
     /*private static String getDbNameToUse(RepositoryConfigurationSource source) {
         return (String) ((AnnotationMetadata) source.getSource()).getAnnotationAttributes(
-            EnableRavenDatabaseRepositories.class.getName()).get("dbName");
+            EnableAllegroGraphDatabaseRepositories.class.getName()).get("dbName");
     }*/
 }

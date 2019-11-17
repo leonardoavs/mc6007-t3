@@ -1,19 +1,19 @@
 {
   "home": {
-    "title": "Welcome, MC6007-T2-->BDA!",
+    "title": "Welcome, MC6007-P3-->BDA!",
     "subtitle": "This is your homepage",
     "logged": {
       "message": "You are logged in as user \"{{username}}\"."
     },
-    "question": "If you have any question on MC6007-T2-->BDA:",
+    "question": "If you have any question on MC6007-P3-->BDA:",
     "link": {
       "homepage": "Homepage",
-      "stackoverflow": "MC6007-T2-->BDA on Stack Overflow",
-      "bugtracker": "MC6007-T2-->BDA bug tracker",
-      "chat": "MC6007-T2-->BDA public chat room",
-      "follow": "follow @MC6007-T2-->BDA on Twitter"
+      "stackoverflow": "MC6007-P3-->BDA on Stack Overflow",
+      "bugtracker": "MC6007-P3-->BDA bug tracker",
+      "chat": "MC6007-P3-->BDA public chat room",
+      "follow": "follow @MC6007-P3-->BDA on Twitter"
     },
-    "like": "If you like MC6007-T2-->BDA, don't forget to give us a star on",
+    "like": "If you like MC6007-P3-->BDA, don't forget to give us a star on",
     "github": "GitHub"
   }
 }
